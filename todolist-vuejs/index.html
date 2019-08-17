@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TODOLIST HT VUEJS</title>
+</head>
+<body>
+    
+    <div id="app">
+
+        <h1>{{titulo}}</h1>
+
+        <input type="text" v-model="novaTarefa.descricao" placeholder="Descrição da tarefa">
+        <button @click="adicionar">Adicionar</button>
+
+        <ul>
+            <li v-for="tarefa in tarefas">
+                <span :class="{ 'riscado': tarefa.feito }">{{tarefa.descricao}}</span>
+                <input type="checkbox" v-model="tarefa.feito">
+            </li>
+        </ul>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                titulo: "TODOLIST",
+                tarefas: [],
+                novaTarefa: {},
+            },
+            methods: {
+                adicionar() {
+                    let tarefaCopiada = JSON.parse(JSON.stringify(this.novaTarefa));
+                    this.tarefas.push(tarefaCopiada)
+                }
+            }
+        })
+    </script>
+    <style>
+        .riscado {
+            text-decoration: line-through;
+            color: lightgrey;
+        }
+    </style>
+</body>
+</html>
