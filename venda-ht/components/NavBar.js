@@ -1,15 +1,15 @@
 const NavBar = Vue.component('nav-bar', {
     template: /* html */ ` 
     <nav>
-        <a href="index.html">
+        <router-link to="/">
             <div>Home</div>
-        </a>
-        <a href="cliente.html">
+        </router-link>
+        <router-link to="/clientes">
             <div>Cliente</div>
-        </a>
-        <a href="produto.html">
+        </router-link>
+        <router-link to="/produtos">
             <div>Produto</div>
-        </a>
+        </router-link>
     </nav>
     `
 })

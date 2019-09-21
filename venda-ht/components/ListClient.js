@@ -11,6 +11,9 @@ const ListClient = Vue.component('list-client', {
                     <td>{{c.name}}</td>
                     <td>{{c.email}}</td>
                     <td>{{c.cpf}}</td>
+                    <td>
+                        <button @click="goToDetail(c)">Detalhes</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -23,6 +26,11 @@ const ListClient = Vue.component('list-client', {
     methods: {
         listAll() {
             this.clients = ClientService.findAll()
+        },
+        goToDetail(client) {
+            // muda de rota programaticamente (VueRouter)
+            // $route $router
+            this.$router.push({ name: 'detalhe', params: client })
         }
     },
     created() {
