@@ -5,31 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Vendas High Tech</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@3.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
 </head>
 <body>
 
     <div id="app">
-
-        <nav-bar></nav-bar>
-
-        <router-view></router-view>
         
-        <!-- <h1>{{title}}</h1>
-
-        <form>
-            <h2>Nova venda</h2>
-            <input v-model="venda.data" type="date" placeholder="Data da Venda">
-            <input v-model="venda.total" type="number" placeholder="Total da Venda">
-            <select>
-                <option value="Jão da Silva">Jão da Silva</option>
-                <option value="Maria da Silva">Maria da Silva</option>
-                <option value="Pafúncio da Silva">Pafúncio da Silva</option>
-            </select>
-        </form> -->
-
+        <v-app>
+            <nav-bar></nav-bar>
+            <v-content>
+                <router-view></router-view>
+            </v-content>
+        </v-app>
+        
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <script src="services/ClientService.js"></script>
     <script src="components/FormClient.js"></script>
@@ -49,9 +43,12 @@
             ]
         }) // Instância do VueRouter
 
+        const vuetify = new Vuetify() // Instância do Vuetify
+
         new Vue({
             el: '#app',
             router,
+            vuetify,
             components: {
                 NavBar
             },

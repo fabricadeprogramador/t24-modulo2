@@ -1,12 +1,28 @@
 const FormClient = Vue.component('form-client', {
     template: /* html */ `
-        <form>
-            <input type="text" placeholder="Nome do cliente" v-model="client.name">
-            <input type="email" placeholder="Email do cliente" v-model="client.email">
-            <input type="number" placeholder="CPF do cliente" v-model="client.cpf">
-            <button type="button" @click="save">Salvar</button>
-            <button type="button" @click="cancel">Cancelar</button>
-        </form>
+        <v-form>
+
+            <v-row>
+
+                <v-col>
+                    <v-text-field outlined label="Nome do cliente" v-model="client.name"></v-text-field>
+                </v-col>
+
+                <v-col>
+                    <v-text-field outlined type="email" label="Email do cliente" v-model="client.email"></v-text-field>
+                </v-col>
+
+                <v-col>
+                    <v-text-field outlined type="number" label="CPF do cliente" v-model="client.cpf"></v-text-field>
+                </v-col>
+                
+            </v-row>
+            
+            <v-row justify="space-between" class="px-3">
+                <v-btn type="button" text color="error" @click="cancel">Cancelar</v-btn>
+                <v-btn type="button" color="success" @click="save">Salvar</v-btn>
+            </v-row>
+        </v-form>
     `,
     props: ['client'],
     methods: {

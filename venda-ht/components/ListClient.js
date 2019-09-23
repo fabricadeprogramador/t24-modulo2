@@ -1,10 +1,11 @@
 const ListClient = Vue.component('list-client', {
     template: /* html */ `
-        <table>
+        <v-simple-table class="mt-5">
             <thead>
                 <th>Nome</th>
                 <th>Email</th>
                 <th>CPF</th>
+                <th>Ações</th>
             </thead>
             <tbody>
                 <tr v-for="c in clients">
@@ -12,11 +13,16 @@ const ListClient = Vue.component('list-client', {
                     <td>{{c.email}}</td>
                     <td>{{c.cpf}}</td>
                     <td>
-                        <button @click="goToDetail(c)">Detalhes</button>
+                        <v-btn fab icon small color="info" @click="goToDetail(c)">
+                            <v-icon>mdi-eye</v-icon>
+                        </v-btn>
+                        <v-btn fab icon small color="error">
+                            <v-icon>mdi-delete</v-icon>
+                        </v-btn>
                     </td>
                 </tr>
             </tbody>
-        </table>
+        </v-simple-table>
     `,
     data() {
         return {

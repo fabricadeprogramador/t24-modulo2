@@ -1,12 +1,9 @@
 const Clientes = Vue.component('clientes', {
     template: /* html */ `
-        <div>
-            <h1>{{title}}</h1>
-
+        <v-container>
             <form-client @saved="updateList" @cancel="cancel" :client="client"></form-client>
-
             <list-client ref="list"></list-client>
-        </div>
+        </v-container>
     `,
     components: {
         NavBar,
