@@ -3,31 +3,115 @@
         <v-form>
             <v-row>
                 <v-col cols="6">
-                    <v-text-field v-model="client.name" outlined label="Nome do cliente"></v-text-field>
+                    <validation-provider name="nome" rules="required" v-slot="{ errors }">
+                        <v-text-field 
+                            v-model="client.name" 
+                            outlined 
+                            :error-messages="errors[0]"
+                            label="Nome do cliente"
+                            >
+                        </v-text-field>
+                        <!-- <span> {{ errors[0] }} </span> -->
+                    </validation-provider>
                 </v-col>
                 <v-col cols="4">
-                    <v-text-field v-model="client.email" outlined label="Email do cliente"></v-text-field>
+                    <validation-provider name="email" rules="required|email" v-slot="{ errors }">
+                        <v-text-field 
+                            v-model="client.email" 
+                            outlined 
+                            :error-messages="errors[0]"
+                            label="Email do cliente"
+                            >
+                        </v-text-field>
+                    </validation-provider>
                 </v-col>
                 <v-col cols="2">
-                    <v-text-field v-model="client.cpf" outlined type="number" label="CPF do cliente"></v-text-field>
+                    <validation-provider name="CPF" rules="required" v-slot="{ errors }">
+                        <v-text-field 
+                            v-model="client.cpf" 
+                            outlined 
+                            type="number" 
+                            label="CPF do cliente"
+                            :error-messages="errors[0]"
+                            >
+                        </v-text-field>
+                    </validation-provider>
                 </v-col>
                 <v-col cols="2">
-                    <v-text-field :loading="findingAddress"  @input="findAddress" v-model="client.zipCode" outlined type="number" label="CEP do cliente"></v-text-field>
+                    <validation-provider name="CEP" rules="required" v-slot="{ errors }">
+                        <v-text-field 
+                            :loading="findingAddress"  
+                            @input="findAddress" 
+                            v-model="client.zipCode" 
+                            outlined 
+                            type="number" 
+                            label="CEP do cliente"
+                            :error-messages="errors[0]"
+                            >
+                        </v-text-field>
+                    </validation-provider>
                 </v-col>
                 <v-col cols="4">
-                    <v-text-field :disabled="addressLock" v-model="client.street" outlined label="Logradouro" hint="Ex: Rua, Avenida, etc"></v-text-field>
+                    <validation-provider name="logradouro" rules="required" v-slot="{ errors }">
+                        <v-text-field 
+                            :disabled="addressLock" 
+                            v-model="client.street" 
+                            outlined 
+                            label="Logradouro" 
+                            hint="Ex: Rua, Avenida, etc"
+                            :error-messages="errors[0]"
+                            >
+                        </v-text-field>
+                    </validation-provider>
                 </v-col>
                 <v-col cols="3">
-                    <v-text-field :disabled="addressLock" v-model="client.neighborhood" outlined label="Bairro"></v-text-field>
+                    <validation-provider name="bairro" rules="required" v-slot="{ errors }">
+                        <v-text-field 
+                            :disabled="addressLock" 
+                            v-model="client.neighborhood" 
+                            outlined 
+                            label="Bairro"
+                            :error-messages="errors[0]"
+                            >
+                        </v-text-field>
+                    </validation-provider>
                 </v-col>
                 <v-col cols="3">
-                    <v-text-field :disabled="addressLock" v-model="client.city" outlined label="Cidade"></v-text-field>
+                    <validation-provider name="cidade" rules="required" v-slot="{ errors }">
+                        <v-text-field 
+                            :disabled="addressLock" 
+                            v-model="client.city" 
+                            outlined 
+                            label="Cidade"
+                            :error-messages="errors[0]"
+                            >
+                        </v-text-field>
+                    </validation-provider>
                 </v-col>
                 <v-col cols="3">
-                    <v-text-field :disabled="addressLock" v-model="client.state" outlined label="Estado"></v-text-field>
+                    <validation-provider name="estado" rules="required" v-slot="{ errors }">
+                        <v-text-field 
+                            :disabled="addressLock" 
+                            v-model="client.state" 
+                            outlined 
+                            label="Estado"
+                            :error-messages="errors[0]"
+                            >
+                            </v-text-field>
+                    </validation-provider>
                 </v-col>
                 <v-col cols="2">
-                    <v-text-field :disabled="addressLock" v-model="client.number" outlined type="number" label="Número"></v-text-field>
+                    <validation-provider name="número res." rules="required" v-slot="{ errors }">
+                        <v-text-field 
+                            :disabled="addressLock" 
+                            v-model="client.number" 
+                            outlined 
+                            type="number" 
+                            label="Número"
+                            :error-messages="errors[0]"
+                            >
+                            </v-text-field>
+                    </validation-provider>
                 </v-col>
             </v-row>
             <v-row class="px-3">
