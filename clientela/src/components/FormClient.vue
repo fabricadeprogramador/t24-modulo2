@@ -115,7 +115,7 @@
                 </v-col>
             </v-row>
             <v-row class="px-3">
-                <v-btn color="success">Salvar</v-btn>
+                <v-btn color="success" @click="save">Salvar</v-btn>
                 <v-btn text color="error" @click="clean">Cancelar</v-btn>
             </v-row>
         </v-form>
@@ -148,6 +148,10 @@ export default {
                 this.addressLock = false
                 this.findingAddress = false
             }
+        },
+        save() {
+            // disparar a ação showSnackbar do Vuex
+            this.$store.dispatch('showSuccessSnackbar', 'Salvo com sucesso!')
         }
     }
 }
