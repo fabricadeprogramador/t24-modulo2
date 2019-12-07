@@ -32,6 +32,12 @@ export default new Vuex.Store({
         commit('closeSnackbar')
       }, 5000);
     },
+    showErrorSnackbar({ commit }, message) {
+      commit('showSnackbar', { text: message, color: 'danger' })
+      setTimeout(() => {
+        commit('closeSnackbar')
+      }, 5000);
+    },
     closeSnackbar({ commit }) {
       commit('closeSnackbar')
     }

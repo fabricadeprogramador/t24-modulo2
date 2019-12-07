@@ -42,7 +42,7 @@
                         <v-text-field 
                             :loading="findingAddress"  
                             @input="findAddress" 
-                            v-model="client.zipCode" 
+                            v-model="client.address.cep" 
                             outlined 
                             type="number" 
                             label="CEP do cliente"
@@ -55,7 +55,7 @@
                     <validation-provider name="logradouro" rules="required" v-slot="{ errors }">
                         <v-text-field 
                             :disabled="addressLock" 
-                            v-model="client.street" 
+                            v-model="client.address.street" 
                             outlined 
                             label="Logradouro" 
                             hint="Ex: Rua, Avenida, etc"
@@ -68,7 +68,7 @@
                     <validation-provider name="bairro" rules="required" v-slot="{ errors }">
                         <v-text-field 
                             :disabled="addressLock" 
-                            v-model="client.neighborhood" 
+                            v-model="client.address.neighborhood" 
                             outlined 
                             label="Bairro"
                             :error-messages="errors[0]"
@@ -80,7 +80,7 @@
                     <validation-provider name="cidade" rules="required" v-slot="{ errors }">
                         <v-text-field 
                             :disabled="addressLock" 
-                            v-model="client.city" 
+                            v-model="client.address.city" 
                             outlined 
                             label="Cidade"
                             :error-messages="errors[0]"
@@ -92,7 +92,7 @@
                     <validation-provider name="estado" rules="required" v-slot="{ errors }">
                         <v-text-field 
                             :disabled="addressLock" 
-                            v-model="client.state" 
+                            v-model="client.address.state" 
                             outlined 
                             label="Estado"
                             :error-messages="errors[0]"
@@ -104,7 +104,7 @@
                     <validation-provider name="número res." rules="required" v-slot="{ errors }">
                         <v-text-field 
                             :disabled="addressLock" 
-                            v-model="client.number" 
+                            v-model="client.address.number" 
                             outlined 
                             type="number" 
                             label="Número"
@@ -115,43 +115,67 @@
                 </v-col>
             </v-row>
             <v-row class="px-3">
-                <v-btn color="success" @click="save">Salvar</v-btn>
+                <v-btn color="success" @click="save" :loading="saving" :disabled="saving">Salvar</v-btn>
                 <v-btn text color="error" @click="clean">Cancelar</v-btn>
             </v-row>
         </v-form>
+        <intersecting-circles-spinner
+            :animation-duration="1200"
+            :size="70"
+            color="blue"
+            />
     </v-container>
 </template>
 <script>
 
 import Axios from 'axios'
+import { IntersectingCirclesSpinner } from 'epic-spinners'
 
 export default {
+    components: {
+        IntersectingCirclesSpinner
+    },
     data: () => ({
-        client: {},
+        client: {
+            address: {}
+        },
         addressLock: true,
-        findingAddress: false
+        findingAddress: false,
+        saving: false
     }),
     methods: {
         clean() {
             this.client = {}
         },
         async findAddress() {
-            if(this.client.zipCode && this.client.zipCode.length == 8) {
+            if(this.client.address.cep && this.client.address.cep.length == 8) {
                 this.findingAddress = true
                 // Requisição HTTP GET (assíncrono)
-                let resp = await Axios.get(`https://viacep.com.br/ws/${this.client.zipCode}/json`)
+                let resp = await Axios.get(`https://viacep.com.br/ws/${this.client.address.cep}/json`)
 
-                this.client.street = resp.data.logradouro
-                this.client.neighborhood = resp.data.bairro
-                this.client.city = resp.data.localidade
-                this.client.state = resp.data.uf
+                this.client.address.street = resp.data.logradouro
+                this.client.address.neighborhood = resp.data.bairro
+                this.client.address.city = resp.data.localidade
+                this.client.address.state = resp.data.uf
                 this.addressLock = false
                 this.findingAddress = false
             }
         },
-        save() {
+        async save() {
             // disparar a ação showSnackbar do Vuex
-            this.$store.dispatch('showSuccessSnackbar', 'Salvo com sucesso!')
+
+            try {
+                this.saving = true
+                await Axios.post('http://localhost:3000/clients', this.client)
+                this.$store.dispatch('showSuccessSnackbar', 'Salvo com sucesso!')
+                this.client = { address: {} }
+            } catch (error) {
+                console.log(`Erro ao salvar cliente: ${error}`)
+                this.$store.dispatch('showErrorSnackbar', 'Erro ao salvar')
+            } finally {
+                this.saving = false
+            }
+
         }
     }
 }
